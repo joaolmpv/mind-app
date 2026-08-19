@@ -61,9 +61,16 @@
   .p-media .tag{background:rgba(217,164,65,0.15);color:var(--media);}
   .p-baixa .tag{background:rgba(122,158,126,0.15);color:var(--baixa);}
   .p-lembrete .tag{background:rgba(92,143,214,0.15);color:var(--lembrete);}
-  .task-card .del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;opacity:0;transition:opacity .15s;flex-shrink:0;}
-  .task-card:hover .del{opacity:0.7;}
+  .task-card .edit,.task-card .del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;opacity:0;transition:opacity .15s;flex-shrink:0;}
+  .task-card:hover .edit,.task-card:hover .del{opacity:0.7;}
+  .task-card .edit:hover{color:var(--brass);}
   .task-card .del:hover{color:var(--alta);}
+  .task-card.editing{background:var(--panel-raised);border:1px dashed var(--brass);}
+  .task-edit-form{flex:1;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .task-edit-form input[type=time],.task-edit-form select{background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:6px 8px;border-radius:6px;font-family:var(--sans);font-size:0.82rem;}
+  .task-edit-form input[type=text]{flex:1;min-width:120px;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:6px 10px;border-radius:6px;font-family:var(--sans);font-size:0.86rem;}
+  .task-edit-form button{background:var(--brass);color:var(--ink);border:none;padding:6px 12px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.78rem;}
+  .task-edit-form button.cancel{background:none;border:1px solid var(--line);color:var(--muted);}
   .empty-slot{color:var(--muted);font-size:0.8rem;font-style:italic;margin-left:16px;opacity:0.5;}
 
   .add-form{display:flex;gap:8px;flex-wrap:wrap;background:var(--panel-raised);padding:14px;border-radius:8px;margin:20px 0 30px 0;border:1px dashed var(--line);}
@@ -81,8 +88,15 @@
   .goal-item input[type=checkbox]{margin-top:2px;accent-color:var(--brass);cursor:pointer;}
   .goal-item .txt{flex:1;font-size:0.88rem;line-height:1.35;}
   .goal-item.done .txt{text-decoration:line-through;opacity:0.5;}
-  .goal-item .del{background:none;border:none;color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s;}
-  .goal-item:hover .del{opacity:0.6;}
+  .goal-item .edit,.goal-item .del{background:none;border:none;color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s;}
+  .goal-item:hover .edit,.goal-item:hover .del{opacity:0.6;}
+  .goal-item .edit:hover{color:var(--brass);}
+  .goal-item .del:hover{color:var(--alta);}
+  .goal-item.editing{background:var(--panel-raised);border:1px dashed var(--brass);}
+  .goal-edit-form{flex:1;display:flex;gap:6px;}
+  .goal-edit-form input{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:6px 10px;border-radius:6px;font-size:0.85rem;}
+  .goal-edit-form button{background:var(--brass);color:var(--ink);border:none;padding:6px 10px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.78rem;}
+  .goal-edit-form button.cancel{background:none;border:1px solid var(--line);color:var(--muted);}
   .goal-add{display:flex;gap:6px;margin-top:6px;}
   .goal-add input{flex:1;background:var(--panel-raised);border:1px solid var(--line);color:var(--paper);padding:7px 10px;border-radius:6px;font-size:0.82rem;}
   .goal-add button{background:none;border:1px solid var(--brass);color:var(--brass);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:0.9rem;}
@@ -316,6 +330,8 @@ let calDate = new Date();
 let selectedDay = null;
 let currentUser = null;
 let unsubSnapshot = null;
+let editingTaskId = null;
+let editingGoal = null; // { key, id }
 
 const dateEl = document.getElementById('today-date');
 dateEl.textContent = new Date().toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
@@ -479,19 +495,40 @@ function renderTimeline(containerId, dateStr){
   spine.className = 'spine-line';
   wrap.appendChild(spine);
 
+  const prioOptions = ['alta','media','baixa','lembrete'];
+
   sorted.forEach(t=>{
     const slot = document.createElement('div');
     slot.className = 'slot';
-    slot.innerHTML = `
-      <div class="time">${t.time}</div>
-      <div class="tick"></div>
-      <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}">
-        <input type="checkbox" ${t.done?'checked':''} class="task-check">
-        <span class="txt">${escapeHtml(t.text)}</span>
-        <span class="tag">${t.priority}</span>
-        <button class="del task-del">×</button>
-      </div>
-    `;
+    if(editingTaskId === t.id){
+      slot.innerHTML = `
+        <div class="time">${t.time}</div>
+        <div class="tick"></div>
+        <div class="task-card editing" data-id="${t.id}">
+          <div class="task-edit-form">
+            <input type="time" class="edit-time" value="${t.time}">
+            <select class="edit-priority">
+              ${prioOptions.map(p=>`<option value="${p}" ${p===t.priority?'selected':''}>${p.charAt(0).toUpperCase()+p.slice(1)}</option>`).join('')}
+            </select>
+            <input type="text" class="edit-text" value="${escapeHtml(t.text)}">
+            <button class="save-edit">Salvar</button>
+            <button type="button" class="cancel cancel-edit">Cancelar</button>
+          </div>
+        </div>
+      `;
+    }else{
+      slot.innerHTML = `
+        <div class="time">${t.time}</div>
+        <div class="tick"></div>
+        <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}">
+          <input type="checkbox" ${t.done?'checked':''} class="task-check">
+          <span class="txt">${escapeHtml(t.text)}</span>
+          <span class="tag">${t.priority}</span>
+          <button class="edit task-edit">✎</button>
+          <button class="del task-del">×</button>
+        </div>
+      `;
+    }
     wrap.appendChild(slot);
   });
 
@@ -506,6 +543,39 @@ function renderTimeline(containerId, dateStr){
     btn.addEventListener('click', e=>{
       const id = e.target.closest('.task-card').dataset.id;
       data.tasks = data.tasks.filter(t=>t.id!==id);
+      save(); renderTimeline(containerId, dateStr); renderCalendar();
+    });
+  });
+  wrap.querySelectorAll('.task-edit').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      editingTaskId = e.target.closest('.task-card').dataset.id;
+      renderTimeline(containerId, dateStr);
+    });
+  });
+  wrap.querySelectorAll('.edit-text').forEach(inp=>{
+    inp.addEventListener('keydown', e=>{
+      if(e.key === 'Enter') e.target.closest('.task-card').querySelector('.save-edit').click();
+      if(e.key === 'Escape') e.target.closest('.task-card').querySelector('.cancel-edit').click();
+    });
+  });
+  wrap.querySelectorAll('.cancel-edit').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      editingTaskId = null;
+      renderTimeline(containerId, dateStr);
+    });
+  });
+  wrap.querySelectorAll('.save-edit').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const card = e.target.closest('.task-card');
+      const id = card.dataset.id;
+      const task = data.tasks.find(t=>t.id===id);
+      const newTime = card.querySelector('.edit-time').value;
+      const newText = card.querySelector('.edit-text').value.trim();
+      const newPriority = card.querySelector('.edit-priority').value;
+      if(task && newText && newTime){
+        task.time = newTime; task.text = newText; task.priority = newPriority;
+      }
+      editingTaskId = null;
       save(); renderTimeline(containerId, dateStr); renderCalendar();
     });
   });
@@ -558,12 +628,25 @@ function renderGoals(){
     }
     list.forEach(g=>{
       const item = document.createElement('div');
-      item.className = 'goal-item' + (g.done ? ' done':'');
-      item.innerHTML = `
-        <input type="checkbox" ${g.done?'checked':''} data-id="${g.id}" data-key="${key}" class="goal-check">
-        <span class="txt">${escapeHtml(g.text)}</span>
-        <button class="del goal-del" data-id="${g.id}" data-key="${key}">×</button>
-      `;
+      const isEditing = editingGoal && editingGoal.key === key && editingGoal.id === g.id;
+      if(isEditing){
+        item.className = 'goal-item editing';
+        item.innerHTML = `
+          <div class="goal-edit-form">
+            <input type="text" class="edit-goal-text" value="${escapeHtml(g.text)}" data-id="${g.id}" data-key="${key}">
+            <button class="save-goal-edit" data-id="${g.id}" data-key="${key}">Salvar</button>
+            <button type="button" class="cancel cancel-goal-edit">Cancelar</button>
+          </div>
+        `;
+      }else{
+        item.className = 'goal-item' + (g.done ? ' done':'');
+        item.innerHTML = `
+          <input type="checkbox" ${g.done?'checked':''} data-id="${g.id}" data-key="${key}" class="goal-check">
+          <span class="txt">${escapeHtml(g.text)}</span>
+          <button class="edit goal-edit" data-id="${g.id}" data-key="${key}">✎</button>
+          <button class="del goal-del" data-id="${g.id}" data-key="${key}">×</button>
+        `;
+      }
       el.appendChild(item);
     });
   });
@@ -579,6 +662,36 @@ function renderGoals(){
     btn.addEventListener('click', e=>{
       const { id, key } = e.target.dataset;
       data.goals[key] = data.goals[key].filter(x=>x.id!==id);
+      save(); renderGoals();
+    });
+  });
+  document.querySelectorAll('.goal-edit').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const { id, key } = e.target.dataset;
+      editingGoal = { key, id };
+      renderGoals();
+    });
+  });
+  document.querySelectorAll('.edit-goal-text').forEach(inp=>{
+    inp.addEventListener('keydown', e=>{
+      if(e.key === 'Enter') e.target.closest('.goal-edit-form').querySelector('.save-goal-edit').click();
+      if(e.key === 'Escape') e.target.closest('.goal-edit-form').querySelector('.cancel-goal-edit').click();
+    });
+  });
+  document.querySelectorAll('.cancel-goal-edit').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      editingGoal = null;
+      renderGoals();
+    });
+  });
+  document.querySelectorAll('.save-goal-edit').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const { id, key } = e.target.dataset;
+      const input = document.querySelector(`.edit-goal-text[data-id="${id}"][data-key="${key}"]`);
+      const newText = input.value.trim();
+      const g = data.goals[key].find(x=>x.id===id);
+      if(g && newText){ g.text = newText; }
+      editingGoal = null;
       save(); renderGoals();
     });
   });
