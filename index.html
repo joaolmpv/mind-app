@@ -212,12 +212,91 @@
     .cal-panel{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto;}
   }
 
+  /* ---- Indicador de constância ---- */
+  /* Feedback sempre neutro e idêntico: sem cor de alerta, sem ícone, sem variação visual
+     conforme o valor. O número é o único dado — ver princípio anti-reforço-variável do app. */
+  .consistency-bar{display:flex;align-items:center;gap:10px;background:none;border:none;padding:0;margin:0 0 18px 0;cursor:pointer;font-family:var(--mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;}
+  .consistency-bar:hover{color:var(--brass);}
+  .consistency-bar .consistency-dot{opacity:0.5;}
+  .consistency-overlay{display:none;position:fixed;inset:0;background:rgba(18,24,27,0.75);z-index:90;align-items:center;justify-content:center;padding:20px;}
+  .consistency-overlay.open{display:flex;}
+  .consistency-modal{background:var(--panel-raised);border:1px solid var(--line);border-radius:10px;padding:24px;width:100%;max-width:400px;max-height:80vh;overflow-y:auto;position:relative;}
+  .consistency-title{font-family:var(--display);font-weight:400;font-size:1.2rem;margin:0 0 16px 0;color:var(--paper);}
+  .consistency-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:0.8rem;}
+  .consistency-row:last-child{border-bottom:none;}
+  .consistency-row .day-label{color:var(--paper);text-transform:capitalize;}
+  .consistency-row .day-count{color:var(--muted);}
+
   /* ---- Metas ancoradas em ação ---- */
   .goal-body{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
   .goal-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
   .goal-next{font-family:var(--mono);font-size:0.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
   .goal-schedule-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:5px;padding:3px 8px;font-size:0.64rem;cursor:pointer;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;}
   .goal-schedule-btn:hover{border-color:var(--brass);color:var(--brass);}
+
+  /* ---- Opções avançadas (repetição / âncora / difícil) — bloco reaproveitado nos 4
+     formulários de tarefa (Hoje, Calendário, Revisão, edição inline) ---- */
+  .adv-toggle-wrap{width:100%;margin-top:-2px;}
+  .adv-toggle-wrap a, a.adv-toggle{font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-decoration:underline;cursor:pointer;letter-spacing:0.4px;}
+  .adv-toggle-wrap a:hover, a.adv-toggle:hover{color:var(--brass);}
+  .adv-options{width:100%;display:flex;flex-direction:column;gap:8px;background:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-top:6px;}
+  .adv-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .adv-row label{font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;min-width:70px;}
+  .adv-row select{background:var(--panel);border:1px solid var(--line);color:var(--paper);padding:6px 8px;border-radius:6px;font-family:var(--sans);font-size:0.82rem;}
+  .adv-days{gap:10px;}
+  .day-check{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:0.68rem;color:var(--muted);text-transform:none;min-width:0;letter-spacing:0;}
+  .day-check input{accent-color:var(--brass);cursor:pointer;}
+  .dificil-check{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:0.82rem;color:var(--paper);text-transform:none;letter-spacing:0;min-width:0;}
+  .dificil-check input{accent-color:var(--brass);cursor:pointer;}
+
+  /* ---- Recorrência e âncoras: marcações na timeline ---- */
+  .recur-icon{margin-left:4px;color:var(--muted);opacity:0.8;}
+  .anchor-marker{color:var(--muted);}
+  .task-body{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .anchor-note{font-family:var(--mono);font-size:0.66rem;color:var(--muted);letter-spacing:0.3px;}
+
+  /* ---- Quebra em passos ---- */
+  .task-card-wrap{margin-bottom:12px;}
+  .task-card-wrap .task-card{margin-bottom:0;}
+  .task-extra{margin-left:16px;padding:6px 14px 0;display:flex;gap:14px;align-items:center;}
+  .subtasks-toggle,.first-step-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.4px;padding:0;text-decoration:underline;}
+  .subtasks-toggle:hover,.first-step-btn:hover{color:var(--brass);}
+  .subtasks-panel{margin-left:16px;margin-top:8px;background:var(--panel);border-radius:8px;padding:10px 12px;}
+  .subtask-row{display:flex;align-items:center;gap:8px;padding:4px 0;}
+  .subtask-row input[type=checkbox]{accent-color:var(--brass);cursor:pointer;}
+  .subtask-txt{flex:1;font-size:0.85rem;}
+  .subtask-txt.done{text-decoration:line-through;opacity:0.5;}
+  .subtask-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.9rem;opacity:0;transition:opacity .15s;}
+  .subtask-row:hover .subtask-del{opacity:0.7;}
+  .subtask-del:hover{color:var(--alta);}
+  .empty-subtasks{color:var(--muted);font-size:0.78rem;font-style:italic;opacity:0.6;padding:2px 0;}
+  .subtask-add{display:flex;gap:6px;margin-top:6px;}
+  .subtask-add input{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:6px 10px;border-radius:6px;font-size:0.8rem;}
+  .subtask-add button{background:none;border:1px solid var(--brass);color:var(--brass);border-radius:6px;padding:5px 10px;cursor:pointer;font-size:0.85rem;}
+  .subtask-add button:hover{background:var(--brass-dim);}
+
+  /* ---- Só o primeiro passo ---- */
+  .first-step-overlay{display:none;position:fixed;inset:0;background:var(--ink);z-index:95;align-items:center;justify-content:center;padding:24px;}
+  .first-step-overlay.open{display:flex;}
+  .first-step-modal{width:100%;max-width:480px;text-align:center;}
+  .first-step-text{font-family:var(--display);font-size:1.6rem;color:var(--paper);margin-bottom:32px;line-height:1.4;}
+  #first-step-done{background:var(--brass);color:var(--ink);border:none;padding:16px 40px;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;display:block;width:100%;margin-bottom:14px;}
+  #first-step-done:hover{background:#DDB434;}
+  #first-step-close{background:none;border:1px solid var(--line);color:var(--muted);padding:10px 20px;border-radius:8px;cursor:pointer;font-size:0.85rem;}
+  #first-step-close:hover{color:var(--alta);border-color:var(--alta);}
+
+  /* ---- Revisão ---- */
+  .review-heading{font-family:var(--display);font-weight:400;font-size:1.15rem;color:var(--brass);margin:28px 0 12px 0;}
+  .review-heading:first-child{margin-top:0;}
+  .review-week-stats{display:flex;flex-direction:column;gap:2px;background:var(--panel);border-radius:8px;padding:6px 14px;}
+  .review-stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:0.85rem;}
+  .review-stat-row:last-child{border-bottom:none;}
+  .review-stat-label{color:var(--paper);text-transform:capitalize;}
+  .review-stat-value{color:var(--muted);}
+  .review-goals-list{display:flex;flex-direction:column;gap:8px;}
+  .review-goal-row{display:flex;align-items:center;gap:12px;background:var(--panel);border-radius:8px;padding:10px 12px;flex-wrap:wrap;}
+  .review-goal-row .txt{flex:1;font-size:0.88rem;min-width:120px;}
+  .review-goal-col-label{font-family:var(--mono);font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;background:var(--panel-raised);padding:2px 7px;border-radius:4px;}
 </style>
 </head>
 <body class="auth-locked">
@@ -238,9 +317,15 @@
     <button class="active" data-tab="hoje">Hoje</button>
     <button data-tab="calendario">Calendário</button>
     <button data-tab="metas">Metas</button>
+    <button data-tab="revisao">Revisão</button>
   </nav>
 
   <section id="tab-hoje" class="active">
+    <button type="button" id="consistency-toggle" class="consistency-bar">
+      <span id="consistency-ratio">0/0 esta semana</span>
+      <span class="consistency-dot">·</span>
+      <span id="consistency-streak">0 dias seguidos</span>
+    </button>
     <div id="unclassified-section" style="display:none;">
       <div class="unclassified-heading">Não classificado</div>
       <div id="unclassified-list"></div>
@@ -258,6 +343,7 @@
       <input type="text" id="new-text" placeholder="O que precisa fazer?">
       <button id="add-task-btn">Adicionar</button>
       <button type="button" id="cancel-form-mode" class="cancel" style="display:none;">Cancelar</button>
+      <div id="new-adv-placeholder"></div>
     </div>
     <div class="focus-toggle-wrap" id="focus-toggle-wrap" style="display:none;">
       <a href="#" id="focus-toggle">ver dia completo</a>
@@ -297,6 +383,7 @@
           </select>
           <input type="text" id="cal-new-text" placeholder="O que foi anotado nesse dia?">
           <button id="cal-add-task-btn">Adicionar</button>
+          <div id="cal-new-adv-placeholder"></div>
         </div>
         <div class="spine-wrap" id="cal-timeline"></div>
       </div>
@@ -334,6 +421,29 @@
       </div>
     </div>
   </section>
+
+  <section id="tab-revisao">
+    <h2 class="review-heading">Semana que passou</h2>
+    <div class="review-week-stats" id="review-week-stats"></div>
+
+    <h2 class="review-heading">Metas sem próximo passo</h2>
+    <div class="review-goals-list" id="review-goals-list"></div>
+
+    <h2 class="review-heading">Planejar a semana</h2>
+    <div class="add-form">
+      <input type="date" id="review-new-date">
+      <input type="time" id="review-new-time" value="08:00">
+      <select id="review-new-priority">
+        <option value="alta">Alta</option>
+        <option value="media" selected>Média</option>
+        <option value="baixa">Baixa</option>
+        <option value="lembrete">Lembrete</option>
+      </select>
+      <input type="text" id="review-new-text" placeholder="Tarefa da próxima semana...">
+      <button id="review-add-task-btn">Adicionar</button>
+      <div id="review-new-adv-placeholder"></div>
+    </div>
+  </section>
   </div>
 
   <button id="quick-capture-fab" class="fab" title="Captura rápida" aria-label="Adicionar rapidamente">+</button>
@@ -349,6 +459,22 @@
         <button type="submit" id="qc-submit">Adicionar</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="first-step-overlay" id="first-step-overlay">
+  <div class="first-step-modal">
+    <div class="first-step-text" id="first-step-text"></div>
+    <button type="button" id="first-step-done">Feito</button>
+    <button type="button" id="first-step-close" class="cancel">Fechar</button>
+  </div>
+</div>
+
+<div class="consistency-overlay" id="consistency-overlay">
+  <div class="consistency-modal">
+    <button class="cal-panel-close" id="consistency-close" type="button">×</button>
+    <h3 class="consistency-title">Últimos 14 dias</h3>
+    <div class="consistency-list" id="consistency-list"></div>
   </div>
 </div>
 
@@ -406,6 +532,9 @@ let unsubSnapshot = null;
 let editingTaskId = null;
 let editingGoal = null; // { key, id }
 let formMode = null; // { type: 'classify', taskId } | { type: 'goal-link', goalId, goalKey }
+let subtasksOpenId = null;
+let firstStepTaskId = null;
+let firstStepOccurrence = null;
 let focusMode = localStorage.getItem('agenda-focus-mode');
 focusMode = focusMode === null ? true : focusMode === 'on';
 
@@ -438,6 +567,236 @@ function needsBoost(g){
   return !nextStepFor(g.id) && (Date.now() - g.created > SEVEN_DAYS_MS);
 }
 
+// ---- Recorrência ----
+// Uma tarefa com frequency !== 'none' é um "modelo": data.tasks guarda só ela (nunca
+// duplica), e as ocorrências em outros dias são geradas na hora (renderização), nunca
+// salvas. Cada ocorrência tem seu próprio "done" via completions[data], exceto a data
+// original da tarefa (t.date), que continua usando o campo done normal — assim tarefas
+// não-recorrentes (frequency:'none', o padrão) continuam funcionando exatamente como antes.
+function occursOn(t, dateStr){
+  if(!t.date || dateStr < t.date) return false;
+  if(!t.frequency || t.frequency === 'none') return t.date === dateStr;
+  if(t.frequency === 'daily') return true;
+  if(t.frequency === 'weekly'){
+    const dow = new Date(dateStr + 'T00:00:00').getDay();
+    return (t.days || []).includes(dow);
+  }
+  return false;
+}
+
+// Instância "renderizável" de uma tarefa para uma data específica: mesmos campos do
+// modelo, só o `done` muda conforme a data (raiz usa t.done; as demais usam completions).
+function instanceFor(t, dateStr){
+  const isRoot = dateStr === t.date;
+  const done = isRoot ? !!t.done : !!(t.completions && t.completions[dateStr]);
+  return Object.assign({}, t, { done, _occurrence: dateStr, _isRoot: isRoot });
+}
+
+function tasksForDate(dateStr){
+  return data.tasks.filter(t => occursOn(t, dateStr)).map(t => instanceFor(t, dateStr));
+}
+
+function addMinutes(timeStr, minutes){
+  const [h,m] = timeStr.split(':').map(Number);
+  const total = ((h*60+m+minutes) % 1440 + 1440) % 1440;
+  return `${pad(Math.floor(total/60))}:${pad(total%60)}`;
+}
+
+// Horário efetivo pra ordenar na timeline: se ancorada, horário da âncora + 5min (só um
+// nível — a âncora da âncora, se existir, é ignorada, pra não ter encadeamento/ciclo).
+function effectiveTime(t){
+  if(t.anchor_task_id){
+    const anchor = data.tasks.find(x=>x.id===t.anchor_task_id);
+    if(anchor && anchor.time) return addMinutes(anchor.time, 5);
+  }
+  return t.time;
+}
+
+function timeColumnHtml(t){
+  const recurIcon = (t.frequency && t.frequency !== 'none') ? '<span class="recur-icon" title="Recorrente">↻</span>' : '';
+  if(t.anchor_task_id){
+    return `<span class="anchor-marker">→</span>${recurIcon}`;
+  }
+  return `${t.time}${recurIcon}`;
+}
+
+function anchorNoteHtml(t){
+  if(!t.anchor_task_id) return '';
+  const anchor = data.tasks.find(x=>x.id===t.anchor_task_id);
+  const label = anchor ? escapeHtml(anchor.text) : 'tarefa removida';
+  return `<div class="anchor-note">depois de ${label}</div>`;
+}
+
+// ---- Opções avançadas (repetição / âncora / difícil) ----
+// Bloco reaproveitado nos 4 formulários de tarefa (Hoje, Calendário, Revisão, edição
+// inline). Gerado uma vez por formulário estático (via placeholder) ou a cada render
+// no caso do formulário de edição inline, que é reconstruído a cada vez.
+function advancedOptionsHtml(prefix){
+  const weekdayLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  return `
+    <div class="adv-toggle-wrap"><a href="#" class="adv-toggle" data-prefix="${prefix}">mais opções</a></div>
+    <div class="adv-options" id="${prefix}-adv" style="display:none;">
+      <div class="adv-row">
+        <label>Repetir</label>
+        <select id="${prefix}-freq">
+          <option value="none">Nunca</option>
+          <option value="daily">Todo dia</option>
+          <option value="weekly">Dias específicos</option>
+        </select>
+      </div>
+      <div class="adv-row adv-days" id="${prefix}-days-row" style="display:none;">
+        ${weekdayLabels.map((label,i)=>`<label class="day-check"><input type="checkbox" class="${prefix}-day" value="${i}">${label}</label>`).join('')}
+      </div>
+      <div class="adv-row">
+        <label>Ancorar em</label>
+        <select id="${prefix}-anchor"><option value="">Nenhuma</option></select>
+      </div>
+      <div class="adv-row">
+        <label class="dificil-check"><input type="checkbox" id="${prefix}-dificil"> Tarefa difícil</label>
+      </div>
+    </div>
+  `;
+}
+
+function wireAdvancedOptions(prefix){
+  const toggle = document.querySelector(`.adv-toggle[data-prefix="${prefix}"]`);
+  const panel = document.getElementById(`${prefix}-adv`);
+  if(!toggle || !panel || toggle.dataset.wired) return;
+  toggle.dataset.wired = '1';
+  toggle.addEventListener('click', e=>{
+    e.preventDefault();
+    const open = panel.style.display !== 'none';
+    panel.style.display = open ? 'none' : 'block';
+    toggle.textContent = open ? 'mais opções' : 'menos opções';
+  });
+  document.getElementById(`${prefix}-freq`).addEventListener('change', e=>{
+    document.getElementById(`${prefix}-days-row`).style.display = e.target.value === 'weekly' ? 'flex' : 'none';
+  });
+}
+
+function populateAnchorSelect(prefix, dateStr, excludeId){
+  const sel = document.getElementById(`${prefix}-anchor`);
+  if(!sel) return;
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Nenhuma</option>';
+  tasksForDate(dateStr || todayStr()).filter(t => t.id !== excludeId && !t.anchor_task_id).forEach(t=>{
+    const opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = `${t.time} · ${t.text}`;
+    sel.appendChild(opt);
+  });
+  if([...sel.options].some(o=>o.value===current)) sel.value = current;
+}
+
+function readAdvancedOptions(prefix){
+  const freq = document.getElementById(`${prefix}-freq`).value;
+  const days = freq === 'weekly'
+    ? Array.from(document.querySelectorAll(`.${prefix}-day:checked`)).map(el=>Number(el.value))
+    : [];
+  const anchorTaskId = document.getElementById(`${prefix}-anchor`).value || null;
+  const dificil = document.getElementById(`${prefix}-dificil`).checked;
+  return { frequency: freq, days, anchorTaskId, dificil };
+}
+
+function resetAdvancedOptions(prefix){
+  document.getElementById(`${prefix}-freq`).value = 'none';
+  document.getElementById(`${prefix}-days-row`).style.display = 'none';
+  document.querySelectorAll(`.${prefix}-day`).forEach(el=>{ el.checked = false; });
+  document.getElementById(`${prefix}-anchor`).value = '';
+  document.getElementById(`${prefix}-dificil`).checked = false;
+  document.getElementById(`${prefix}-adv`).style.display = 'none';
+  const toggle = document.querySelector(`.adv-toggle[data-prefix="${prefix}"]`);
+  if(toggle) toggle.textContent = 'mais opções';
+}
+
+function setAdvancedOptions(prefix, t){
+  document.getElementById(`${prefix}-freq`).value = t.frequency || 'none';
+  document.getElementById(`${prefix}-days-row`).style.display = (t.frequency === 'weekly') ? 'flex' : 'none';
+  document.querySelectorAll(`.${prefix}-day`).forEach(el=>{ el.checked = (t.days||[]).includes(Number(el.value)); });
+  document.getElementById(`${prefix}-anchor`).value = t.anchor_task_id || '';
+  document.getElementById(`${prefix}-dificil`).checked = !!t.dificil;
+}
+
+// ---- Indicador de constância ----
+// "Compromisso de disciplina" = prioridade alta/media/baixa. Lembrete fica de fora do
+// cálculo (não é algo que se "cumpre", é só um aviso).
+function isCommitment(t){ return t.priority === 'alta' || t.priority === 'media' || t.priority === 'baixa'; }
+
+function dateOffset(n){
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+
+function dayStats(dateStr){
+  const dayTasks = tasksForDate(dateStr).filter(isCommitment);
+  return { date: dateStr, done: dayTasks.filter(t=>t.done).length, total: dayTasks.length };
+}
+
+function weekStats(){
+  let done = 0, total = 0;
+  for(let i=0;i<7;i++){
+    const s = dayStats(dateOffset(i));
+    done += s.done; total += s.total;
+  }
+  return { done, total };
+}
+
+// Mesmo cálculo de constância dos últimos 7 dias, quebrado por categoria — usado na aba Revisão.
+function weekStatsByPriority(){
+  const cats = { alta:{done:0,total:0}, media:{done:0,total:0}, baixa:{done:0,total:0} };
+  for(let i=0;i<7;i++){
+    tasksForDate(dateOffset(i)).forEach(t=>{
+      if(cats[t.priority]){
+        cats[t.priority].total++;
+        if(t.done) cats[t.priority].done++;
+      }
+    });
+  }
+  return cats;
+}
+
+// Dias seguidos com pelo menos 1 tarefa concluída, contando hoje para trás. Se hoje ainda
+// não tem nenhuma concluída, hoje simplesmente não entra na contagem (o dia não acabou) —
+// mas isso não zera a sequência dos dias anteriores.
+function computeStreak(){
+  const startOffset = dayStats(todayStr()).done > 0 ? 0 : 1;
+  let streak = 0;
+  for(let i=startOffset; i<3650; i++){
+    if(dayStats(dateOffset(i)).done > 0) streak++;
+    else break;
+  }
+  return streak;
+}
+
+function renderConsistency(){
+  const w = weekStats();
+  document.getElementById('consistency-ratio').textContent = `${w.done}/${w.total} esta semana`;
+  const streak = computeStreak();
+  document.getElementById('consistency-streak').textContent = `${streak} dia${streak===1?'':'s'} seguido${streak===1?'':'s'}`;
+}
+
+document.getElementById('consistency-toggle').addEventListener('click', ()=>{
+  const list = document.getElementById('consistency-list');
+  list.innerHTML = '';
+  for(let i=0;i<14;i++){
+    const s = dayStats(dateOffset(i));
+    const d = new Date(s.date + 'T00:00:00');
+    const label = d.toLocaleDateString('pt-BR', { weekday:'short', day:'2-digit', month:'2-digit' });
+    const row = document.createElement('div');
+    row.className = 'consistency-row';
+    row.innerHTML = `<span class="day-label">${label}</span><span class="day-count">${s.done}/${s.total}</span>`;
+    list.appendChild(row);
+  }
+  document.getElementById('consistency-overlay').classList.add('open');
+});
+document.getElementById('consistency-close').addEventListener('click', ()=>{
+  document.getElementById('consistency-overlay').classList.remove('open');
+});
+document.getElementById('consistency-overlay').addEventListener('click', e=>{
+  if(e.target.id === 'consistency-overlay') e.currentTarget.classList.remove('open');
+});
+
 // Cache local (rascunho instantâneo + fallback offline). O Firestore é a fonte de verdade quando logado.
 function loadLocalCache(){
   try{
@@ -462,6 +821,12 @@ function migrateData(){
     if(t.time === undefined) t.time = null;
     if(t.priority === undefined) t.priority = null;
     if(t.goal_id === undefined) t.goal_id = null;
+    if(t.frequency === undefined) t.frequency = 'none';
+    if(t.days === undefined) t.days = [];
+    if(t.completions === undefined) t.completions = {};
+    if(t.anchor_task_id === undefined) t.anchor_task_id = null;
+    if(t.dificil === undefined) t.dificil = false;
+    if(t.subtasks === undefined) t.subtasks = [];
   });
   ['longo','medio','curto'].forEach(key=>{
     (data.goals[key] || []).forEach(g=>{
@@ -478,13 +843,16 @@ function saveLocalCache(){
 function renderAll(){
   renderUnclassified();
   renderTimeline('timeline', todayStr());
+  renderConsistency();
   renderGoals();
   renderCalendar();
+  renderReview();
   if(selectedDay){ renderTimeline('cal-timeline', selectedDay); }
 }
 
 async function save(){
   saveLocalCache();
+  renderConsistency();
   if(currentUser){
     try{
       await setDoc(doc(db, 'users', currentUser.uid), data);
@@ -597,6 +965,30 @@ document.getElementById('logout-btn').addEventListener('click', ()=>{
   signOut(auth);
 });
 
+// Painel de subtarefas embutido no card (checklist simples, até 5 itens).
+function subtasksPanelHtml(t){
+  const subtasks = t.subtasks || [];
+  const rows = subtasks.map(s=>`
+    <div class="subtask-row">
+      <input type="checkbox" ${s.done?'checked':''} class="subtask-check" data-task-id="${t.id}" data-sub-id="${s.id}">
+      <span class="subtask-txt ${s.done?'done':''}">${escapeHtml(s.text)}</span>
+      <button class="subtask-del" data-task-id="${t.id}" data-sub-id="${s.id}">×</button>
+    </div>
+  `).join('');
+  const canAddMore = subtasks.length < 5;
+  return `
+    <div class="subtasks-panel">
+      ${rows || '<div class="empty-subtasks">Nenhum passo ainda.</div>'}
+      ${canAddMore ? `
+        <div class="subtask-add">
+          <input type="text" class="subtask-input" data-task-id="${t.id}" placeholder="Novo passo...">
+          <button type="button" class="subtask-add-btn" data-task-id="${t.id}">+</button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
 // Markup de um task-card isolado, reaproveitado tanto na spine normal quanto no card de foco.
 function taskCardMarkup(t){
   if(editingTaskId === t.id){
@@ -610,17 +1002,31 @@ function taskCardMarkup(t){
           <input type="text" class="edit-text" value="${escapeHtml(t.text)}">
           <button class="save-edit">Salvar</button>
           <button type="button" class="cancel cancel-edit">Cancelar</button>
+          ${advancedOptionsHtml('edit')}
         </div>
       </div>
     `;
   }
+  const subtasks = t.subtasks || [];
+  const doneCount = subtasks.filter(s=>s.done).length;
+  const showFirstStepBtn = t.dificil && subtasks.length > 0;
   return `
-    <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}">
-      <input type="checkbox" ${t.done?'checked':''} class="task-check">
-      <span class="txt">${escapeHtml(t.text)}</span>
-      <span class="tag">${t.priority}</span>
-      <button class="edit task-edit">✎</button>
-      <button class="del task-del">×</button>
+    <div class="task-card-wrap">
+      <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}" data-occurrence="${t._occurrence || t.date}">
+        <input type="checkbox" ${t.done?'checked':''} class="task-check">
+        <div class="task-body">
+          <span class="txt">${escapeHtml(t.text)}</span>
+          ${anchorNoteHtml(t)}
+        </div>
+        <span class="tag">${t.priority}</span>
+        <button class="edit task-edit">✎</button>
+        <button class="del task-del">×</button>
+      </div>
+      <div class="task-extra">
+        <button type="button" class="subtasks-toggle" data-id="${t.id}">${subtasks.length ? `Passos (${doneCount}/${subtasks.length})` : 'Quebrar em passos'}</button>
+        ${showFirstStepBtn ? `<button type="button" class="first-step-btn" data-id="${t.id}" data-occurrence="${t._occurrence || t.date}">Só o primeiro passo</button>` : ''}
+      </div>
+      ${subtasksOpenId === t.id ? subtasksPanelHtml(t) : ''}
     </div>
   `;
 }
@@ -633,7 +1039,7 @@ function renderSpineInto(container, sortedTasks){
     const slot = document.createElement('div');
     slot.className = 'slot';
     slot.innerHTML = `
-      <div class="time">${t.time}</div>
+      <div class="time">${timeColumnHtml(t)}</div>
       <div class="tick"></div>
       ${taskCardMarkup(t)}
     `;
@@ -641,15 +1047,16 @@ function renderSpineInto(container, sortedTasks){
   });
 }
 
-// Escolhe a tarefa em destaque no modo Foco: a próxima pendente por horário (ou, se todas
-// as pendentes já passaram do horário atual, a mais recente entre as atrasadas).
+// Escolhe a tarefa em destaque no modo Foco: a próxima pendente por horário efetivo (ou,
+// se todas as pendentes já passaram do horário atual, a mais recente entre as atrasadas).
 function getFocusTask(dateStr){
   const now = `${pad(new Date().getHours())}:${pad(new Date().getMinutes())}`;
-  const undone = data.tasks.filter(t => t.date === dateStr && !t.done && t.time);
+  const undone = tasksForDate(dateStr).filter(t => !t.done && t.time);
   if(undone.length === 0) return null;
-  const upcoming = undone.filter(t => t.time >= now).sort((a,b)=> a.time.localeCompare(b.time));
+  const byEffTime = (a,b)=> effectiveTime(a).localeCompare(effectiveTime(b));
+  const upcoming = undone.filter(t => effectiveTime(t) >= now).sort(byEffTime);
   if(upcoming.length) return upcoming[0];
-  return [...undone].sort((a,b)=> b.time.localeCompare(a.time))[0];
+  return [...undone].sort((a,b)=> effectiveTime(b).localeCompare(effectiveTime(a)))[0];
 }
 
 function renderTimeline(containerId, dateStr){
@@ -664,13 +1071,18 @@ function renderTimeline(containerId, dateStr){
       document.getElementById('focus-toggle').textContent = focusMode ? 'ver dia completo' : 'voltar ao foco';
     }
   }
+  if(containerId === 'timeline'){
+    const isClassifyOrLink = formMode && (formMode.type === 'classify' || formMode.type === 'goal-link');
+    const activeDate = isClassifyOrLink ? (document.getElementById('new-date').value || todayStr()) : todayStr();
+    populateAnchorSelect('new', activeDate, formMode && formMode.type === 'classify' ? formMode.taskId : null);
+  }
 
-  const dayTasks = data.tasks.filter(t => t.date === dateStr);
+  const dayTasks = tasksForDate(dateStr);
   if(dayTasks.length === 0){
     wrap.innerHTML = '<div class="empty-slot">Nada anotado para este dia ainda.</div>';
     return;
   }
-  const sorted = [...dayTasks].sort((a,b)=> a.time.localeCompare(b.time));
+  const sorted = [...dayTasks].sort((a,b)=> effectiveTime(a).localeCompare(effectiveTime(b)));
 
   const focusTask = (isHojeFocusable && focusMode) ? getFocusTask(dateStr) : null;
 
@@ -678,7 +1090,7 @@ function renderTimeline(containerId, dateStr){
     const focusWrap = document.createElement('div');
     focusWrap.className = 'focus-card';
     focusWrap.innerHTML = `
-      <div class="focus-label">Foco agora <span class="focus-time">${focusTask.time}</span></div>
+      <div class="focus-label">Foco agora <span class="focus-time">${timeColumnHtml(focusTask)}</span></div>
       ${taskCardMarkup(focusTask)}
     `;
     wrap.appendChild(focusWrap);
@@ -696,9 +1108,19 @@ function renderTimeline(containerId, dateStr){
 
   wrap.querySelectorAll('.task-check').forEach(cb=>{
     cb.addEventListener('change', e=>{
-      const id = e.target.closest('.task-card').dataset.id;
+      const card = e.target.closest('.task-card');
+      const id = card.dataset.id;
+      const occ = card.dataset.occurrence;
       const task = data.tasks.find(t=>t.id===id);
-      if(task){ task.done = e.target.checked; save(); renderTimeline(containerId, dateStr); renderCalendar(); }
+      if(task){
+        if(occ === task.date){
+          task.done = e.target.checked;
+        }else{
+          task.completions = task.completions || {};
+          task.completions[occ] = e.target.checked;
+        }
+        save(); renderTimeline(containerId, dateStr); renderCalendar();
+      }
     });
   });
   wrap.querySelectorAll('.task-del').forEach(btn=>{
@@ -736,16 +1158,101 @@ function renderTimeline(containerId, dateStr){
       const newPriority = card.querySelector('.edit-priority').value;
       if(task && newText && newTime){
         task.time = newTime; task.text = newText; task.priority = newPriority;
+        const adv = readAdvancedOptions('edit');
+        task.frequency = adv.frequency;
+        task.days = adv.days;
+        task.anchor_task_id = adv.anchorTaskId;
+        task.dificil = adv.dificil;
+        if(!task.completions) task.completions = {};
       }
       editingTaskId = null;
       save(); renderTimeline(containerId, dateStr); renderCalendar();
     });
   });
+
+  // Opções avançadas do formulário de edição inline: reconstruído a cada render, então
+  // precisa ser religado e repopulado toda vez que a tarefa em edição está nesta timeline.
+  if(editingTaskId && document.getElementById('edit-freq')){
+    const et = data.tasks.find(x=>x.id===editingTaskId);
+    if(et){
+      wireAdvancedOptions('edit');
+      setAdvancedOptions('edit', et);
+      populateAnchorSelect('edit', et.date, et.id);
+    }
+  }
+
+  // ---- Quebra em passos ----
+  wrap.querySelectorAll('.subtasks-toggle').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const id = e.target.dataset.id;
+      subtasksOpenId = subtasksOpenId === id ? null : id;
+      renderTimeline(containerId, dateStr);
+    });
+  });
+  wrap.querySelectorAll('.first-step-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      openFirstStep(e.target.dataset.id, e.target.dataset.occurrence);
+    });
+  });
+  wrap.querySelectorAll('.subtask-check').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const { taskId, subId } = e.target.dataset;
+      const task = data.tasks.find(x=>x.id===taskId);
+      const sub = task && (task.subtasks||[]).find(s=>s.id===subId);
+      if(sub){
+        sub.done = e.target.checked;
+        if(task.subtasks.length && task.subtasks.every(s=>s.done)){
+          // marca concluída a ocorrência sendo vista (raiz ou, se recorrente, o dia certo)
+          if(dateStr === task.date){ task.done = true; }
+          else{ task.completions = task.completions || {}; task.completions[dateStr] = true; }
+        }
+        save(); renderTimeline(containerId, dateStr); renderCalendar();
+      }
+    });
+  });
+  wrap.querySelectorAll('.subtask-del').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const { taskId, subId } = e.target.dataset;
+      const task = data.tasks.find(x=>x.id===taskId);
+      if(task){
+        task.subtasks = (task.subtasks||[]).filter(s=>s.id!==subId);
+        save(); renderTimeline(containerId, dateStr); renderCalendar();
+      }
+    });
+  });
+  wrap.querySelectorAll('.subtask-add-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const taskId = e.target.dataset.taskId;
+      const input = wrap.querySelector(`.subtask-input[data-task-id="${taskId}"]`);
+      const text = input.value.trim();
+      const task = data.tasks.find(x=>x.id===taskId);
+      if(!text || !task) return;
+      task.subtasks = task.subtasks || [];
+      if(task.subtasks.length >= 5) return;
+      task.subtasks.push({ id: uid(), text, done:false });
+      save(); renderTimeline(containerId, dateStr); renderCalendar();
+    });
+  });
+  wrap.querySelectorAll('.subtask-input').forEach(inp=>{
+    inp.addEventListener('keydown', e=>{
+      if(e.key === 'Enter') wrap.querySelector(`.subtask-add-btn[data-task-id="${inp.dataset.taskId}"]`).click();
+    });
+  });
 }
 
-function addTask(dateStr, time, priority, text, goalId){
-  if(!text || !time) return;
-  data.tasks.push({ id: uid(), date: dateStr, time, priority, text, done:false, goal_id: goalId || null });
+function addTask(dateStr, time, priority, text, opts){
+  if(!text || !time || !dateStr) return;
+  opts = opts || {};
+  data.tasks.push({
+    id: uid(), date: dateStr, time, priority, text, done:false,
+    goal_id: opts.goalId || null,
+    frequency: opts.frequency || 'none',
+    days: opts.days || [],
+    completions: {},
+    anchor_task_id: opts.anchorTaskId || null,
+    dificil: !!opts.dificil,
+    subtasks: []
+  });
   save();
 }
 
@@ -759,6 +1266,7 @@ function exitFormMode(){
   document.getElementById('form-context').style.display = 'none';
   document.getElementById('form-context').textContent = '';
   document.getElementById('new-text').placeholder = 'O que precisa fazer?';
+  resetAdvancedOptions('new');
 }
 
 function switchToHoje(){
@@ -779,6 +1287,7 @@ function startClassify(taskId){
   const ctx = document.getElementById('form-context');
   ctx.textContent = 'Classificando item da captura rápida.';
   ctx.style.display = 'block';
+  populateAnchorSelect('new', todayStr(), taskId);
   document.getElementById('new-text').focus();
 }
 
@@ -797,6 +1306,7 @@ function startGoalLink(goalId, goalKey){
   const ctx = document.getElementById('form-context');
   ctx.textContent = goal ? `Agendando próximo passo para: "${goal.text}"` : 'Agendando próximo passo';
   ctx.style.display = 'block';
+  populateAnchorSelect('new', todayStr(), null);
   document.getElementById('new-text').focus();
 }
 
@@ -815,6 +1325,11 @@ document.getElementById('add-task-btn').addEventListener('click', ()=>{
     const t = data.tasks.find(x=>x.id===formMode.taskId);
     if(t && text && time){
       t.date = dateVal; t.time = time; t.priority = priority; t.text = text;
+      const adv = readAdvancedOptions('new');
+      t.frequency = adv.frequency; t.days = adv.days;
+      t.anchor_task_id = adv.anchorTaskId; t.dificil = adv.dificil;
+      if(!t.completions) t.completions = {};
+      if(!t.subtasks) t.subtasks = [];
       exitFormMode();
       save(); renderAll();
     }
@@ -823,15 +1338,17 @@ document.getElementById('add-task-btn').addEventListener('click', ()=>{
   if(formMode && formMode.type === 'goal-link'){
     const dateVal = document.getElementById('new-date').value || todayStr();
     if(text && time){
-      addTask(dateVal, time, priority, text, formMode.goalId);
+      const adv = readAdvancedOptions('new');
+      addTask(dateVal, time, priority, text, Object.assign({ goalId: formMode.goalId }, adv));
       exitFormMode();
       renderAll();
     }
     return;
   }
 
-  addTask(todayStr(), time, priority, text);
+  addTask(todayStr(), time, priority, text, readAdvancedOptions('new'));
   textEl.value = '';
+  resetAdvancedOptions('new');
   renderTimeline('timeline', todayStr());
   renderCalendar();
 });
@@ -891,7 +1408,15 @@ qcOverlay.addEventListener('click', e=>{
   if(e.target === qcOverlay) qcOverlay.classList.remove('open');
 });
 document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape' && qcOverlay.classList.contains('open')) qcOverlay.classList.remove('open');
+  if(e.key !== 'Escape') return;
+  if(qcOverlay.classList.contains('open')) qcOverlay.classList.remove('open');
+  const consistencyOverlay = document.getElementById('consistency-overlay');
+  if(consistencyOverlay.classList.contains('open')) consistencyOverlay.classList.remove('open');
+  const firstStepOverlay = document.getElementById('first-step-overlay');
+  if(firstStepOverlay.classList.contains('open')){
+    firstStepOverlay.classList.remove('open');
+    firstStepTaskId = null;
+  }
 });
 document.getElementById('qc-form').addEventListener('submit', e=>{
   e.preventDefault();
@@ -912,14 +1437,50 @@ document.getElementById('focus-toggle').addEventListener('click', e=>{
   renderTimeline('timeline', todayStr());
 });
 
+// ---- Só o primeiro passo ----
+// Visão isolada: mostra só o próximo subtask não concluído, nada mais na tela, pra
+// reduzir a carga de decisão. Fecha depois de marcar "Feito" (não encadeia pro próximo).
+function openFirstStep(taskId, occurrence){
+  const task = data.tasks.find(x=>x.id===taskId);
+  if(!task) return;
+  const next = (task.subtasks||[]).find(s=>!s.done);
+  if(!next) return;
+  firstStepTaskId = taskId;
+  firstStepOccurrence = occurrence || task.date;
+  document.getElementById('first-step-text').textContent = next.text;
+  document.getElementById('first-step-overlay').classList.add('open');
+}
+document.getElementById('first-step-done').addEventListener('click', ()=>{
+  const task = data.tasks.find(x=>x.id===firstStepTaskId);
+  if(task){
+    const next = (task.subtasks||[]).find(s=>!s.done);
+    if(next){
+      next.done = true;
+      if(task.subtasks.length && task.subtasks.every(s=>s.done)){
+        if(firstStepOccurrence === task.date){ task.done = true; }
+        else{ task.completions = task.completions || {}; task.completions[firstStepOccurrence] = true; }
+      }
+      save(); renderAll();
+    }
+  }
+  document.getElementById('first-step-overlay').classList.remove('open');
+  firstStepTaskId = null;
+  firstStepOccurrence = null;
+});
+document.getElementById('first-step-close').addEventListener('click', ()=>{
+  document.getElementById('first-step-overlay').classList.remove('open');
+  firstStepTaskId = null;
+});
+
 document.getElementById('cal-add-task-btn').addEventListener('click', ()=>{
   if(!selectedDay) return;
   const time = document.getElementById('cal-new-time').value;
   const priority = document.getElementById('cal-new-priority').value;
   const textEl = document.getElementById('cal-new-text');
   const text = textEl.value.trim();
-  addTask(selectedDay, time, priority, text);
+  addTask(selectedDay, time, priority, text, readAdvancedOptions('cal-new'));
   textEl.value = '';
+  resetAdvancedOptions('cal-new');
   renderTimeline('cal-timeline', selectedDay);
   renderCalendar();
 });
@@ -1047,6 +1608,63 @@ document.querySelectorAll('.goal-add input').forEach(inp=>{
   });
 });
 
+// ---- Revisão ----
+// Reaproveita weekStatsByPriority (constância) e nextStepFor/startGoalLink (metas) —
+// nada de cálculo novo aqui, só uma outra vitrine pros mesmos dados.
+function renderReview(){
+  const stats = weekStatsByPriority();
+  const statsEl = document.getElementById('review-week-stats');
+  statsEl.innerHTML = ['alta','media','baixa'].map(p=>{
+    const s = stats[p];
+    return `<div class="review-stat-row"><span class="review-stat-label">${p}</span><span class="review-stat-value">${s.done}/${s.total}</span></div>`;
+  }).join('');
+
+  const goalsEl = document.getElementById('review-goals-list');
+  const labels = { longo:'Longo Prazo', medio:'Médio Prazo', curto:'Curto Prazo' };
+  let rows = '';
+  ['longo','medio','curto'].forEach(key=>{
+    (data.goals[key]||[]).filter(g=>!g.done && !nextStepFor(g.id)).forEach(g=>{
+      rows += `
+        <div class="review-goal-row">
+          <span class="review-goal-col-label">${labels[key]}</span>
+          <span class="txt">${escapeHtml(g.text)}</span>
+          <button class="goal-schedule-btn" data-id="${g.id}" data-key="${key}">+ Agendar próximo passo</button>
+        </div>
+      `;
+    });
+  });
+  goalsEl.innerHTML = rows || '<div class="empty-goal">Todas as metas têm um próximo passo definido.</div>';
+  goalsEl.querySelectorAll('.goal-schedule-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const { id, key } = e.target.dataset;
+      startGoalLink(id, key);
+    });
+  });
+
+  populateAnchorSelect('review-new', document.getElementById('review-new-date').value || todayStr(), null);
+}
+
+document.getElementById('review-new-date').addEventListener('change', e=>{
+  populateAnchorSelect('review-new', e.target.value || todayStr(), null);
+});
+document.getElementById('review-add-task-btn').addEventListener('click', ()=>{
+  const dateVal = document.getElementById('review-new-date').value;
+  const time = document.getElementById('review-new-time').value;
+  const priority = document.getElementById('review-new-priority').value;
+  const textEl = document.getElementById('review-new-text');
+  const text = textEl.value.trim();
+  if(!dateVal) return;
+  addTask(dateVal, time, priority, text, readAdvancedOptions('review-new'));
+  textEl.value = '';
+  resetAdvancedOptions('review-new');
+  renderReview();
+  renderCalendar();
+  if(dateVal === todayStr()) renderTimeline('timeline', todayStr());
+});
+document.getElementById('review-new-text').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('review-add-task-btn').click();
+});
+
 // ---- Calendário ----
 function renderCalendar(){
   const y = calDate.getFullYear(), m = calDate.getMonth();
@@ -1079,7 +1697,7 @@ function renderCalendar(){
     if(key === selectedDay) cls += ' selected';
     cell.className = cls;
 
-    const cats = [...new Set(data.tasks.filter(t=>t.date===key).map(t=>t.priority))];
+    const cats = [...new Set(tasksForDate(key).map(t=>t.priority))];
     const order = ['alta','media','baixa','lembrete'];
     const dots = order.filter(c=>cats.includes(c)).map(c=>`<span class="dot dot-${c}"></span>`).join('');
 
@@ -1100,6 +1718,7 @@ function showDayDetail(dateStr){
   hint.style.display = 'none';
   const dObj = new Date(dateStr + 'T00:00:00');
   document.getElementById('cal-panel-title').textContent = dObj.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
+  populateAnchorSelect('cal-new', dateStr, null);
   renderTimeline('cal-timeline', dateStr);
 }
 
@@ -1129,6 +1748,16 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
   });
 });
+
+// Injeta o bloco de opções avançadas (repetição/âncora/difícil) nos 3 formulários
+// estáticos. O formulário de edição inline gera o seu próprio a cada render (é
+// reconstruído do zero toda vez), então não precisa de placeholder aqui.
+['new','cal-new','review-new'].forEach(prefix=>{
+  const placeholder = document.getElementById(`${prefix}-adv-placeholder`);
+  placeholder.outerHTML = advancedOptionsHtml(prefix);
+  wireAdvancedOptions(prefix);
+});
+document.getElementById('review-new-date').value = dateOffset(-7);
 
 // Mostra o cache local imediatamente (instantâneo, mesmo antes do Firebase responder).
 // Quando o login resolver, subscribeUser() assume o Firestore como fonte de verdade.
