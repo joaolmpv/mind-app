@@ -73,11 +73,52 @@
   .task-edit-form button.cancel{background:none;border:1px solid var(--line);color:var(--muted);}
   .empty-slot{color:var(--muted);font-size:0.8rem;font-style:italic;margin-left:16px;opacity:0.5;}
 
+  /* ---- Foco do dia ---- */
+  .focus-card{margin-bottom:20px;}
+  .focus-label{font-family:var(--mono);font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--brass);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .focus-label .focus-time{color:var(--paper);font-size:0.8rem;letter-spacing:1px;}
+  .focus-card .task-card{padding:20px 22px;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,0.35);border-left-width:4px;}
+  .focus-card .task-card .txt{font-size:1.15rem;}
+  .timeline-rest{opacity:0.6;}
+  .focus-toggle-wrap{margin:-14px 0 18px 0;}
+  .focus-toggle-wrap a{font-family:var(--mono);font-size:0.72rem;color:var(--muted);text-decoration:underline;cursor:pointer;letter-spacing:0.5px;}
+  .focus-toggle-wrap a:hover{color:var(--brass);}
+
   .add-form{display:flex;gap:8px;flex-wrap:wrap;background:var(--panel-raised);padding:14px;border-radius:8px;margin:20px 0 30px 0;border:1px dashed var(--line);}
-  .add-form input[type=time], .add-form select{background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:8px 10px;border-radius:6px;font-family:var(--sans);font-size:0.85rem;}
+  .add-form input[type=time], .add-form input[type=date], .add-form select{background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:8px 10px;border-radius:6px;font-family:var(--sans);font-size:0.85rem;}
   .add-form input[type=text]{flex:1;min-width:160px;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:8px 12px;border-radius:6px;font-family:var(--sans);font-size:0.9rem;}
   .add-form button{background:var(--brass);color:var(--ink);border:none;padding:8px 18px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;}
   .add-form button:hover{background:#DDB434;}
+  .add-form button.cancel{background:none;border:1px solid var(--line);color:var(--muted);}
+  .add-form button.cancel:hover{color:var(--alta);border-color:var(--alta);}
+  .add-form .form-context{width:100%;font-family:var(--mono);font-size:0.7rem;color:var(--brass);letter-spacing:0.3px;margin-bottom:2px;}
+
+  /* ---- Não classificado ---- */
+  #unclassified-section{margin-bottom:22px;}
+  .unclassified-heading{font-family:var(--mono);font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .unclassified-card{background:var(--panel);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--line);}
+  .unclassified-card .txt{flex:1;font-size:0.9rem;}
+  .unclassified-card button{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.72rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;}
+  .unclassified-card button.classify-btn{color:var(--brass);border-color:var(--brass);}
+  .unclassified-card button.classify-btn:hover{background:var(--brass-dim);}
+  .unclassified-card button.unclassified-del{border:none;font-size:1rem;padding:4px 8px;}
+  .unclassified-card button.unclassified-del:hover{color:var(--alta);}
+
+  /* ---- Captura rápida (FAB) ---- */
+  .fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--brass);color:var(--ink);border:none;font-size:1.8rem;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.4);z-index:50;display:flex;align-items:center;justify-content:center;}
+  .fab:hover{background:#DDB434;}
+  body.auth-locked .fab{display:none;}
+  .qc-overlay{display:none;position:fixed;inset:0;background:rgba(18,24,27,0.75);z-index:90;align-items:center;justify-content:center;padding:20px;}
+  .qc-overlay.open{display:flex;}
+  .qc-modal{background:var(--panel-raised);border:1px solid var(--line);border-radius:10px;padding:24px;width:100%;max-width:380px;}
+  .qc-title{font-family:var(--display);font-weight:400;font-size:1.3rem;margin:0 0 16px 0;color:var(--paper);}
+  #qc-form input{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:10px 12px;border-radius:6px;font-family:var(--sans);font-size:0.92rem;box-sizing:border-box;}
+  #qc-form input:focus{outline:none;border-color:var(--brass);}
+  .qc-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
+  .qc-actions button{padding:8px 16px;border-radius:6px;font-size:0.85rem;cursor:pointer;font-weight:600;}
+  #qc-submit{background:var(--brass);color:var(--ink);border:none;}
+  #qc-submit:hover{background:#DDB434;}
+  .qc-actions button.cancel{background:none;border:1px solid var(--line);color:var(--muted);font-weight:400;}
 
   /* ---- Metas ---- */
   .goals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
@@ -170,6 +211,13 @@
     .cal-layout{grid-template-columns:1fr 360px;}
     .cal-panel{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto;}
   }
+
+  /* ---- Metas ancoradas em ação ---- */
+  .goal-body{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .goal-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .goal-next{font-family:var(--mono);font-size:0.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+  .goal-schedule-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:5px;padding:3px 8px;font-size:0.64rem;cursor:pointer;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;}
+  .goal-schedule-btn:hover{border-color:var(--brass);color:var(--brass);}
 </style>
 </head>
 <body class="auth-locked">
@@ -193,7 +241,13 @@
   </nav>
 
   <section id="tab-hoje" class="active">
+    <div id="unclassified-section" style="display:none;">
+      <div class="unclassified-heading">Não classificado</div>
+      <div id="unclassified-list"></div>
+    </div>
     <div class="add-form">
+      <div class="form-context" id="form-context" style="display:none;"></div>
+      <input type="date" id="new-date" style="display:none;">
       <input type="time" id="new-time" value="08:00">
       <select id="new-priority">
         <option value="alta">Alta</option>
@@ -203,6 +257,10 @@
       </select>
       <input type="text" id="new-text" placeholder="O que precisa fazer?">
       <button id="add-task-btn">Adicionar</button>
+      <button type="button" id="cancel-form-mode" class="cancel" style="display:none;">Cancelar</button>
+    </div>
+    <div class="focus-toggle-wrap" id="focus-toggle-wrap" style="display:none;">
+      <a href="#" id="focus-toggle">ver dia completo</a>
     </div>
     <div class="spine-wrap" id="timeline">
       <div class="loading">Carregando agenda...</div>
@@ -277,6 +335,21 @@
     </div>
   </section>
   </div>
+
+  <button id="quick-capture-fab" class="fab" title="Captura rápida" aria-label="Adicionar rapidamente">+</button>
+</div>
+
+<div class="qc-overlay" id="qc-overlay">
+  <div class="qc-modal">
+    <h3 class="qc-title">Captura rápida</h3>
+    <form id="qc-form">
+      <input type="text" id="qc-text" placeholder="O que você precisa lembrar?" autocomplete="off">
+      <div class="qc-actions">
+        <button type="button" id="qc-cancel" class="cancel">Cancelar</button>
+        <button type="submit" id="qc-submit">Adicionar</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div class="auth-overlay" id="auth-overlay">
@@ -332,6 +405,11 @@ let currentUser = null;
 let unsubSnapshot = null;
 let editingTaskId = null;
 let editingGoal = null; // { key, id }
+let formMode = null; // { type: 'classify', taskId } | { type: 'goal-link', goalId, goalKey }
+let focusMode = localStorage.getItem('agenda-focus-mode');
+focusMode = focusMode === null ? true : focusMode === 'on';
+
+const PRIORITIES = ['alta','media','baixa','lembrete'];
 
 const dateEl = document.getElementById('today-date');
 dateEl.textContent = new Date().toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
@@ -340,6 +418,25 @@ function uid(){ return Date.now().toString(36) + Math.random().toString(36).slic
 function pad(n){ return String(n).padStart(2,'0'); }
 function todayStr(){ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
 function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function formatDateShort(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+}
+
+const SEVEN_DAYS_MS = 7*24*60*60*1000;
+
+// Próxima tarefa futura (ou de hoje), não concluída, vinculada a essa meta.
+function nextStepFor(goalId){
+  const candidates = data.tasks.filter(t => t.goal_id === goalId && !t.done && t.date && t.date >= todayStr());
+  if(candidates.length === 0) return null;
+  candidates.sort((a,b)=> a.date === b.date ? a.time.localeCompare(b.time) : a.date.localeCompare(b.date));
+  return candidates[0];
+}
+
+// Meta sem próximo passo há mais de 7 dias desde a criação: sobe para o topo da coluna (só na exibição).
+function needsBoost(g){
+  return !nextStepFor(g.id) && (Date.now() - g.created > SEVEN_DAYS_MS);
+}
 
 // Cache local (rascunho instantâneo + fallback offline). O Firestore é a fonte de verdade quando logado.
 function loadLocalCache(){
@@ -353,8 +450,24 @@ function loadLocalCache(){
   }catch(e){
     console.log('Nenhum dado salvo ainda, começando do zero.');
   }
-  // migração: tarefas antigas sem data viram "hoje"
-  data.tasks.forEach(t=>{ if(!t.date) t.date = todayStr(); });
+  migrateData();
+}
+
+// Preenche campos novos (goal_id, created) em dados salvos antes dessas funcionalidades existirem.
+// Importante: usa "=== undefined" (não "!t.date") para não confundir tarefa antiga (sem campo)
+// com tarefa intencionalmente não classificada (date explicitamente null).
+function migrateData(){
+  data.tasks.forEach(t=>{
+    if(t.date === undefined) t.date = todayStr();
+    if(t.time === undefined) t.time = null;
+    if(t.priority === undefined) t.priority = null;
+    if(t.goal_id === undefined) t.goal_id = null;
+  });
+  ['longo','medio','curto'].forEach(key=>{
+    (data.goals[key] || []).forEach(g=>{
+      if(g.created === undefined) g.created = 0;
+    });
+  });
 }
 
 function saveLocalCache(){
@@ -363,6 +476,7 @@ function saveLocalCache(){
 }
 
 function renderAll(){
+  renderUnclassified();
   renderTimeline('timeline', todayStr());
   renderGoals();
   renderCalendar();
@@ -389,6 +503,7 @@ function subscribeUser(uidStr){
       const remote = snap.data();
       data.tasks = remote.tasks || [];
       data.goals = remote.goals || { longo: [], medio: [], curto: [] };
+      migrateData();
       saveLocalCache();
     }else{
       // primeiro login nesta conta: usa o que já existe localmente (se houver) como ponto de partida
@@ -482,55 +597,102 @@ document.getElementById('logout-btn').addEventListener('click', ()=>{
   signOut(auth);
 });
 
+// Markup de um task-card isolado, reaproveitado tanto na spine normal quanto no card de foco.
+function taskCardMarkup(t){
+  if(editingTaskId === t.id){
+    return `
+      <div class="task-card editing" data-id="${t.id}">
+        <div class="task-edit-form">
+          <input type="time" class="edit-time" value="${t.time}">
+          <select class="edit-priority">
+            ${PRIORITIES.map(p=>`<option value="${p}" ${p===t.priority?'selected':''}>${p.charAt(0).toUpperCase()+p.slice(1)}</option>`).join('')}
+          </select>
+          <input type="text" class="edit-text" value="${escapeHtml(t.text)}">
+          <button class="save-edit">Salvar</button>
+          <button type="button" class="cancel cancel-edit">Cancelar</button>
+        </div>
+      </div>
+    `;
+  }
+  return `
+    <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}">
+      <input type="checkbox" ${t.done?'checked':''} class="task-check">
+      <span class="txt">${escapeHtml(t.text)}</span>
+      <span class="tag">${t.priority}</span>
+      <button class="edit task-edit">✎</button>
+      <button class="del task-del">×</button>
+    </div>
+  `;
+}
+
+function renderSpineInto(container, sortedTasks){
+  const spine = document.createElement('div');
+  spine.className = 'spine-line';
+  container.appendChild(spine);
+  sortedTasks.forEach(t=>{
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.innerHTML = `
+      <div class="time">${t.time}</div>
+      <div class="tick"></div>
+      ${taskCardMarkup(t)}
+    `;
+    container.appendChild(slot);
+  });
+}
+
+// Escolhe a tarefa em destaque no modo Foco: a próxima pendente por horário (ou, se todas
+// as pendentes já passaram do horário atual, a mais recente entre as atrasadas).
+function getFocusTask(dateStr){
+  const now = `${pad(new Date().getHours())}:${pad(new Date().getMinutes())}`;
+  const undone = data.tasks.filter(t => t.date === dateStr && !t.done && t.time);
+  if(undone.length === 0) return null;
+  const upcoming = undone.filter(t => t.time >= now).sort((a,b)=> a.time.localeCompare(b.time));
+  if(upcoming.length) return upcoming[0];
+  return [...undone].sort((a,b)=> b.time.localeCompare(a.time))[0];
+}
+
 function renderTimeline(containerId, dateStr){
   const wrap = document.getElementById(containerId);
   wrap.innerHTML = '';
+
+  const isHojeFocusable = containerId === 'timeline' && dateStr === todayStr();
+  const toggleWrap = document.getElementById('focus-toggle-wrap');
+  if(toggleWrap){
+    toggleWrap.style.display = isHojeFocusable ? 'block' : 'none';
+    if(isHojeFocusable){
+      document.getElementById('focus-toggle').textContent = focusMode ? 'ver dia completo' : 'voltar ao foco';
+    }
+  }
+
   const dayTasks = data.tasks.filter(t => t.date === dateStr);
   if(dayTasks.length === 0){
     wrap.innerHTML = '<div class="empty-slot">Nada anotado para este dia ainda.</div>';
     return;
   }
   const sorted = [...dayTasks].sort((a,b)=> a.time.localeCompare(b.time));
-  const spine = document.createElement('div');
-  spine.className = 'spine-line';
-  wrap.appendChild(spine);
 
-  const prioOptions = ['alta','media','baixa','lembrete'];
+  const focusTask = (isHojeFocusable && focusMode) ? getFocusTask(dateStr) : null;
 
-  sorted.forEach(t=>{
-    const slot = document.createElement('div');
-    slot.className = 'slot';
-    if(editingTaskId === t.id){
-      slot.innerHTML = `
-        <div class="time">${t.time}</div>
-        <div class="tick"></div>
-        <div class="task-card editing" data-id="${t.id}">
-          <div class="task-edit-form">
-            <input type="time" class="edit-time" value="${t.time}">
-            <select class="edit-priority">
-              ${prioOptions.map(p=>`<option value="${p}" ${p===t.priority?'selected':''}>${p.charAt(0).toUpperCase()+p.slice(1)}</option>`).join('')}
-            </select>
-            <input type="text" class="edit-text" value="${escapeHtml(t.text)}">
-            <button class="save-edit">Salvar</button>
-            <button type="button" class="cancel cancel-edit">Cancelar</button>
-          </div>
-        </div>
-      `;
-    }else{
-      slot.innerHTML = `
-        <div class="time">${t.time}</div>
-        <div class="tick"></div>
-        <div class="task-card p-${t.priority} ${t.done?'done':''}" data-id="${t.id}">
-          <input type="checkbox" ${t.done?'checked':''} class="task-check">
-          <span class="txt">${escapeHtml(t.text)}</span>
-          <span class="tag">${t.priority}</span>
-          <button class="edit task-edit">✎</button>
-          <button class="del task-del">×</button>
-        </div>
-      `;
+  if(focusTask){
+    const focusWrap = document.createElement('div');
+    focusWrap.className = 'focus-card';
+    focusWrap.innerHTML = `
+      <div class="focus-label">Foco agora <span class="focus-time">${focusTask.time}</span></div>
+      ${taskCardMarkup(focusTask)}
+    `;
+    wrap.appendChild(focusWrap);
+
+    const rest = sorted.filter(t => t.id !== focusTask.id);
+    if(rest.length){
+      const restWrap = document.createElement('div');
+      restWrap.className = 'timeline-rest';
+      wrap.appendChild(restWrap);
+      renderSpineInto(restWrap, rest);
     }
-    wrap.appendChild(slot);
-  });
+  }else{
+    renderSpineInto(wrap, sorted);
+  }
 
   wrap.querySelectorAll('.task-check').forEach(cb=>{
     cb.addEventListener('change', e=>{
@@ -581,17 +743,93 @@ function renderTimeline(containerId, dateStr){
   });
 }
 
-function addTask(dateStr, time, priority, text){
+function addTask(dateStr, time, priority, text, goalId){
   if(!text || !time) return;
-  data.tasks.push({ id: uid(), date: dateStr, time, priority, text, done:false });
+  data.tasks.push({ id: uid(), date: dateStr, time, priority, text, done:false, goal_id: goalId || null });
   save();
 }
+
+// ---- Não classificado (captura rápida) + vínculo de meta: ambos reaproveitam o add-form
+// da aba Hoje, alternando seu modo via `formMode` em vez de duplicar formulários.
+function exitFormMode(){
+  formMode = null;
+  document.getElementById('new-date').style.display = 'none';
+  document.getElementById('add-task-btn').textContent = 'Adicionar';
+  document.getElementById('cancel-form-mode').style.display = 'none';
+  document.getElementById('form-context').style.display = 'none';
+  document.getElementById('form-context').textContent = '';
+  document.getElementById('new-text').placeholder = 'O que precisa fazer?';
+}
+
+function switchToHoje(){
+  document.querySelector('nav.tabs button[data-tab="hoje"]').click();
+}
+
+function startClassify(taskId){
+  const t = data.tasks.find(x=>x.id===taskId);
+  if(!t) return;
+  formMode = { type:'classify', taskId };
+  document.getElementById('new-date').style.display = 'inline-block';
+  document.getElementById('new-date').value = todayStr();
+  document.getElementById('new-time').value = '08:00';
+  document.getElementById('new-priority').value = 'media';
+  document.getElementById('new-text').value = t.text;
+  document.getElementById('add-task-btn').textContent = 'Salvar classificação';
+  document.getElementById('cancel-form-mode').style.display = 'inline-block';
+  const ctx = document.getElementById('form-context');
+  ctx.textContent = 'Classificando item da captura rápida.';
+  ctx.style.display = 'block';
+  document.getElementById('new-text').focus();
+}
+
+function startGoalLink(goalId, goalKey){
+  const goal = data.goals[goalKey].find(g=>g.id===goalId);
+  formMode = { type:'goal-link', goalId, goalKey };
+  switchToHoje();
+  document.getElementById('new-date').style.display = 'inline-block';
+  document.getElementById('new-date').value = todayStr();
+  document.getElementById('new-time').value = '08:00';
+  document.getElementById('new-priority').value = 'media';
+  document.getElementById('new-text').value = '';
+  document.getElementById('new-text').placeholder = 'Próximo passo...';
+  document.getElementById('add-task-btn').textContent = 'Salvar próximo passo';
+  document.getElementById('cancel-form-mode').style.display = 'inline-block';
+  const ctx = document.getElementById('form-context');
+  ctx.textContent = goal ? `Agendando próximo passo para: "${goal.text}"` : 'Agendando próximo passo';
+  ctx.style.display = 'block';
+  document.getElementById('new-text').focus();
+}
+
+document.getElementById('cancel-form-mode').addEventListener('click', ()=>{
+  exitFormMode();
+});
 
 document.getElementById('add-task-btn').addEventListener('click', ()=>{
   const time = document.getElementById('new-time').value;
   const priority = document.getElementById('new-priority').value;
   const textEl = document.getElementById('new-text');
   const text = textEl.value.trim();
+
+  if(formMode && formMode.type === 'classify'){
+    const dateVal = document.getElementById('new-date').value || todayStr();
+    const t = data.tasks.find(x=>x.id===formMode.taskId);
+    if(t && text && time){
+      t.date = dateVal; t.time = time; t.priority = priority; t.text = text;
+      exitFormMode();
+      save(); renderAll();
+    }
+    return;
+  }
+  if(formMode && formMode.type === 'goal-link'){
+    const dateVal = document.getElementById('new-date').value || todayStr();
+    if(text && time){
+      addTask(dateVal, time, priority, text, formMode.goalId);
+      exitFormMode();
+      renderAll();
+    }
+    return;
+  }
+
   addTask(todayStr(), time, priority, text);
   textEl.value = '';
   renderTimeline('timeline', todayStr());
@@ -599,6 +837,79 @@ document.getElementById('add-task-btn').addEventListener('click', ()=>{
 });
 document.getElementById('new-text').addEventListener('keydown', e=>{
   if(e.key === 'Enter') document.getElementById('add-task-btn').click();
+});
+
+// ---- Não classificado ----
+function renderUnclassified(){
+  const section = document.getElementById('unclassified-section');
+  const list = document.getElementById('unclassified-list');
+  const items = data.tasks.filter(t => !t.date);
+  if(items.length === 0){
+    section.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+  section.style.display = 'block';
+  list.innerHTML = '';
+  items.forEach(t=>{
+    const card = document.createElement('div');
+    card.className = 'unclassified-card';
+    card.dataset.id = t.id;
+    card.innerHTML = `
+      <span class="txt">${escapeHtml(t.text)}</span>
+      <button class="classify-btn">Classificar</button>
+      <button class="unclassified-del">×</button>
+    `;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('.classify-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      startClassify(e.target.closest('.unclassified-card').dataset.id);
+    });
+  });
+  list.querySelectorAll('.unclassified-del').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const id = e.target.closest('.unclassified-card').dataset.id;
+      data.tasks = data.tasks.filter(t=>t.id!==id);
+      save(); renderUnclassified(); renderCalendar();
+    });
+  });
+}
+
+// ---- Captura rápida (FAB) ----
+const qcOverlay = document.getElementById('qc-overlay');
+const qcText = document.getElementById('qc-text');
+document.getElementById('quick-capture-fab').addEventListener('click', ()=>{
+  qcOverlay.classList.add('open');
+  qcText.value = '';
+  qcText.focus();
+});
+document.getElementById('qc-cancel').addEventListener('click', ()=>{
+  qcOverlay.classList.remove('open');
+});
+qcOverlay.addEventListener('click', e=>{
+  if(e.target === qcOverlay) qcOverlay.classList.remove('open');
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape' && qcOverlay.classList.contains('open')) qcOverlay.classList.remove('open');
+});
+document.getElementById('qc-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const text = qcText.value.trim();
+  if(!text) return;
+  data.tasks.push({ id: uid(), date: null, time: null, priority: null, text, done:false, goal_id: null });
+  save();
+  qcOverlay.classList.remove('open');
+  renderUnclassified();
+  renderCalendar();
+});
+
+// ---- Foco do dia ----
+document.getElementById('focus-toggle').addEventListener('click', e=>{
+  e.preventDefault();
+  focusMode = !focusMode;
+  localStorage.setItem('agenda-focus-mode', focusMode ? 'on' : 'off');
+  renderTimeline('timeline', todayStr());
 });
 
 document.getElementById('cal-add-task-btn').addEventListener('click', ()=>{
@@ -626,7 +937,12 @@ function renderGoals(){
       el.innerHTML = '<div class="empty-goal">Nenhuma meta ainda.</div>';
       return;
     }
-    list.forEach(g=>{
+    // Reordenação silenciosa (só na exibição, não mexe na ordem salva): metas sem
+    // próximo passo há mais de 7 dias sobem para o topo. Sort estável preserva o
+    // resto da ordem original dentro de cada grupo.
+    const displayList = list.slice().sort((a,b)=> (needsBoost(b)?1:0) - (needsBoost(a)?1:0));
+
+    displayList.forEach(g=>{
       const item = document.createElement('div');
       const isEditing = editingGoal && editingGoal.key === key && editingGoal.id === g.id;
       if(isEditing){
@@ -639,10 +955,18 @@ function renderGoals(){
           </div>
         `;
       }else{
+        const next = nextStepFor(g.id);
+        const nextLabel = next ? `Próximo: ${formatDateShort(next.date)}` : 'Sem próximo passo';
         item.className = 'goal-item' + (g.done ? ' done':'');
         item.innerHTML = `
           <input type="checkbox" ${g.done?'checked':''} data-id="${g.id}" data-key="${key}" class="goal-check">
-          <span class="txt">${escapeHtml(g.text)}</span>
+          <div class="goal-body">
+            <span class="txt">${escapeHtml(g.text)}</span>
+            <div class="goal-meta">
+              <span class="goal-next">${nextLabel}</span>
+              <button class="goal-schedule-btn" data-id="${g.id}" data-key="${key}">+ Agendar próximo passo</button>
+            </div>
+          </div>
           <button class="edit goal-edit" data-id="${g.id}" data-key="${key}">✎</button>
           <button class="del goal-del" data-id="${g.id}" data-key="${key}">×</button>
         `;
@@ -670,6 +994,12 @@ function renderGoals(){
       const { id, key } = e.target.dataset;
       editingGoal = { key, id };
       renderGoals();
+    });
+  });
+  document.querySelectorAll('.goal-schedule-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const { id, key } = e.target.dataset;
+      startGoalLink(id, key);
     });
   });
   document.querySelectorAll('.edit-goal-text').forEach(inp=>{
@@ -703,7 +1033,7 @@ document.querySelectorAll('[data-list]').forEach(btn=>{
     const input = document.getElementById('input-'+key);
     const text = input.value.trim();
     if(!text) return;
-    data.goals[key].push({ id: uid(), text, done:false });
+    data.goals[key].push({ id: uid(), text, done:false, created: Date.now() });
     input.value = '';
     save(); renderGoals();
   });
