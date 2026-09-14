@@ -297,6 +297,60 @@
   .review-goal-row{display:flex;align-items:center;gap:12px;background:var(--panel);border-radius:8px;padding:10px 12px;flex-wrap:wrap;}
   .review-goal-row .txt{flex:1;font-size:0.88rem;min-width:120px;}
   .review-goal-col-label{font-family:var(--mono);font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;background:var(--panel-raised);padding:2px 7px;border-radius:4px;}
+
+  /* ---- Conexões: módulo separado, fora da navegação principal do dia a dia ---- */
+  .nav-row{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+  .nav-row nav.tabs{margin-bottom:0;}
+  .connections-icon-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:8px 10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .connections-icon-btn:hover{color:var(--brass);border-color:var(--brass);}
+
+  .connections-screen{display:none;position:fixed;inset:0;background:var(--ink);z-index:80;flex-direction:column;}
+  .connections-screen.open{display:flex;}
+  .connections-header{display:flex;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid var(--line);flex-shrink:0;}
+  .connections-back{background:none;border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;}
+  .connections-back:hover{color:var(--brass);border-color:var(--brass);}
+  .connections-header h2{font-family:var(--display);font-weight:400;font-size:1.4rem;color:var(--paper);margin:0;}
+  .connections-body{flex:1;display:flex;min-height:0;}
+  .connections-graph-wrap{flex:1;position:relative;min-width:0;min-height:0;}
+  .connections-svg{width:100%;height:100%;display:block;}
+  .connections-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:40px;text-align:center;}
+  .connections-empty p{color:var(--muted);font-size:0.95rem;max-width:420px;line-height:1.6;margin:0;}
+  .connections-panel{width:320px;flex-shrink:0;background:var(--panel-raised);border-left:1px solid var(--line);padding:20px;overflow-y:auto;position:relative;display:none;}
+  .connections-panel.open{display:block;}
+  @media(max-width:720px){
+    .connections-body{flex-direction:column;}
+    .connections-panel{width:100%;border-left:none;border-top:1px solid var(--line);max-height:45vh;}
+  }
+
+  .conn-edge{stroke:var(--line);stroke-width:1.5;}
+  .conn-circle{cursor:pointer;stroke:var(--ink);stroke-width:2;}
+  .conn-meta{fill:var(--brass);}
+  .conn-p-alta{fill:var(--alta);}
+  .conn-p-media{fill:var(--media);}
+  .conn-p-baixa{fill:var(--baixa);}
+  .conn-p-lembrete{fill:var(--lembrete);}
+  .conn-label{font-family:var(--mono);font-size:9px;fill:var(--muted);text-anchor:middle;pointer-events:none;}
+
+  .conn-panel-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer;}
+  .conn-panel-close:hover{color:var(--alta);}
+  .conn-panel-title{font-family:var(--display);font-weight:400;font-size:1.2rem;color:var(--paper);margin:0 26px 4px 0;}
+  .conn-panel-type{font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:18px;}
+  .conn-panel-links{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .conn-link-row{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--panel);border-radius:6px;padding:8px 10px;font-size:0.82rem;}
+  .conn-link-label{color:var(--paper);}
+  .conn-link-label em{color:var(--muted);font-style:normal;font-size:0.75rem;}
+  .conn-link-auto{font-family:var(--mono);font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;flex-shrink:0;}
+  .conn-link-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.95rem;flex-shrink:0;}
+  .conn-link-remove:hover{color:var(--alta);}
+  .conn-add-btn{background:none;border:1px solid var(--brass);color:var(--brass);border-radius:6px;padding:7px 14px;cursor:pointer;font-size:0.82rem;width:100%;}
+  .conn-add-btn:hover{background:var(--brass-dim);}
+  .conn-add-form{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+  .conn-add-form input{background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:8px 10px;border-radius:6px;font-size:0.85rem;font-family:var(--sans);width:100%;box-sizing:border-box;}
+  .conn-search-results{display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;}
+  .conn-search-row{background:var(--panel);border-radius:6px;padding:6px 10px;font-size:0.82rem;cursor:pointer;}
+  .conn-search-row:hover{background:var(--brass-dim);color:var(--brass);}
+  .conn-add-actions{display:flex;justify-content:flex-end;}
+  .conn-add-actions button{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;}
 </style>
 </head>
 <body class="auth-locked">
@@ -313,12 +367,21 @@
   </header>
 
   <div id="app-content">
-  <nav class="tabs">
-    <button class="active" data-tab="hoje">Hoje</button>
-    <button data-tab="calendario">Calendário</button>
-    <button data-tab="metas">Metas</button>
-    <button data-tab="revisao">Revisão</button>
-  </nav>
+  <div class="nav-row">
+    <nav class="tabs">
+      <button class="active" data-tab="hoje">Hoje</button>
+      <button data-tab="calendario">Calendário</button>
+      <button data-tab="metas">Metas</button>
+      <button data-tab="revisao">Revisão</button>
+    </nav>
+    <button type="button" id="connections-open-btn" class="connections-icon-btn" title="Conexões" aria-label="Abrir Conexões">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="6" cy="12" r="3.2"/>
+        <circle cx="18" cy="12" r="3.2"/>
+        <line x1="9.2" y1="12" x2="14.8" y2="12"/>
+      </svg>
+    </button>
+  </div>
 
   <section id="tab-hoje" class="active">
     <button type="button" id="consistency-toggle" class="consistency-bar">
@@ -478,6 +541,25 @@
   </div>
 </div>
 
+<div class="connections-screen" id="connections-screen">
+  <div class="connections-header">
+    <button type="button" id="connections-back" class="connections-back">‹ Voltar</button>
+    <h2>Conexões</h2>
+  </div>
+  <div class="connections-body">
+    <div class="connections-graph-wrap">
+      <svg id="connections-svg" class="connections-svg"></svg>
+      <div id="connections-empty" class="connections-empty" style="display:none;">
+        <p>Aqui você vê como suas metas e tarefas se conectam entre si — por vínculos automáticos (uma tarefa ligada a uma meta, ou ancorada em outra) ou por vínculos que você criar manualmente. Ainda não há nenhuma conexão pra mostrar.</p>
+      </div>
+    </div>
+    <div class="connections-panel" id="connections-panel">
+      <button type="button" class="conn-panel-close" id="connections-panel-close">×</button>
+      <div id="connections-panel-content"></div>
+    </div>
+  </div>
+</div>
+
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-modal">
     <h1 class="auth-title">Agenda</h1>
@@ -524,7 +606,7 @@ const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
 const STORAGE_KEY = 'agenda-data';
-let data = { tasks: [], goals: { longo: [], medio: [], curto: [] } };
+let data = { tasks: [], goals: { longo: [], medio: [], curto: [] }, links: [] };
 let calDate = new Date();
 let selectedDay = null;
 let currentUser = null;
@@ -805,6 +887,7 @@ function loadLocalCache(){
       const parsed = JSON.parse(raw);
       data.tasks = parsed.tasks || [];
       data.goals = parsed.goals || { longo: [], medio: [], curto: [] };
+      data.links = parsed.links || [];
     }
   }catch(e){
     console.log('Nenhum dado salvo ainda, começando do zero.');
@@ -833,6 +916,7 @@ function migrateData(){
       if(g.created === undefined) g.created = 0;
     });
   });
+  if(data.links === undefined) data.links = [];
 }
 
 function saveLocalCache(){
@@ -871,6 +955,7 @@ function subscribeUser(uidStr){
       const remote = snap.data();
       data.tasks = remote.tasks || [];
       data.goals = remote.goals || { longo: [], medio: [], curto: [] };
+      data.links = remote.links || [];
       migrateData();
       saveLocalCache();
     }else{
@@ -1127,6 +1212,7 @@ function renderTimeline(containerId, dateStr){
     btn.addEventListener('click', e=>{
       const id = e.target.closest('.task-card').dataset.id;
       data.tasks = data.tasks.filter(t=>t.id!==id);
+      pruneLinksReferencing('tarefa', id);
       save(); renderTimeline(containerId, dateStr); renderCalendar();
     });
   });
@@ -1388,6 +1474,7 @@ function renderUnclassified(){
     btn.addEventListener('click', e=>{
       const id = e.target.closest('.unclassified-card').dataset.id;
       data.tasks = data.tasks.filter(t=>t.id!==id);
+      pruneLinksReferencing('tarefa', id);
       save(); renderUnclassified(); renderCalendar();
     });
   });
@@ -1547,6 +1634,7 @@ function renderGoals(){
     btn.addEventListener('click', e=>{
       const { id, key } = e.target.dataset;
       data.goals[key] = data.goals[key].filter(x=>x.id!==id);
+      pruneLinksReferencing('meta', id);
       save(); renderGoals();
     });
   });
@@ -1737,6 +1825,320 @@ document.getElementById('cal-prev').addEventListener('click', ()=>{
 document.getElementById('cal-next').addEventListener('click', ()=>{
   calDate = new Date(calDate.getFullYear(), calDate.getMonth()+1, 1);
   renderCalendar();
+});
+
+// ---- Conexões ----
+// Módulo separado (fora das abas do dia a dia): visualiza e gerencia vínculos entre
+// Metas e Tarefas. `data.links` guarda só os vínculos MANUAIS; os automáticos (goal_id,
+// anchor_task_id) nunca são duplicados ali — computeGraph() os gera na hora, a partir
+// dos dados que já existem. `type` já aceita 'nota' no modelo, pra um módulo futuro,
+// mesmo sem essa funcionalidade existir ainda.
+let selectedConnKey = null;
+
+function findGoal(id){
+  for(const key of ['longo','medio','curto']){
+    const g = (data.goals[key] || []).find(x=>x.id===id);
+    if(g) return { goal: g, key };
+  }
+  return null;
+}
+
+function splitKey(key){
+  const i = key.indexOf(':');
+  return [key.slice(0,i), key.slice(i+1)];
+}
+
+function nodeFromKey(key){
+  const [type, id] = splitKey(key);
+  if(type === 'meta'){
+    const found = findGoal(id);
+    return found ? { type:'meta', id, key, text: found.goal.text } : null;
+  }
+  if(type === 'tarefa'){
+    const t = data.tasks.find(x=>x.id===id);
+    return t ? { type:'tarefa', id, key, text: t.text, priority: t.priority, done: t.done } : null;
+  }
+  return null; // 'nota' — reservado pra um módulo futuro, ainda não existe
+}
+
+// Todas as metas + tarefas classificadas (com data), pra buscar como alvo de um vínculo manual.
+function allLinkableItems(){
+  const items = [];
+  data.tasks.forEach(t=>{
+    if(t.date) items.push({ type:'tarefa', id:t.id, key:`tarefa:${t.id}`, text:t.text });
+  });
+  ['longo','medio','curto'].forEach(key=>{
+    (data.goals[key] || []).forEach(g=> items.push({ type:'meta', id:g.id, key:`meta:${g.id}`, text:g.text }));
+  });
+  return items;
+}
+
+function pruneLinksReferencing(type, id){
+  if(!data.links || !data.links.length) return;
+  data.links = data.links.filter(l =>
+    !((l.from.type===type && l.from.id===id) || (l.to.type===type && l.to.id===id))
+  );
+}
+
+// Monta nós + arestas (automáticas e manuais). Só entram no grafo itens que têm pelo
+// menos uma conexão — nada isolado aparece, pra manter a visualização limpa.
+function computeGraph(){
+  const nodes = new Map();
+  const edges = [];
+
+  function ensureNode(type, id){
+    const key = `${type}:${id}`;
+    if(nodes.has(key)) return key;
+    const node = nodeFromKey(key);
+    if(!node) return null;
+    nodes.set(key, node);
+    return key;
+  }
+
+  data.tasks.forEach(t=>{
+    if(t.goal_id){
+      const gKey = ensureNode('meta', t.goal_id);
+      const tKey = ensureNode('tarefa', t.id);
+      if(gKey && tKey) edges.push({ from: tKey, to: gKey, kind:'auto', label:null });
+    }
+    if(t.anchor_task_id){
+      const aKey = ensureNode('tarefa', t.anchor_task_id);
+      const tKey = ensureNode('tarefa', t.id);
+      if(aKey && tKey) edges.push({ from: tKey, to: aKey, kind:'auto', label:null });
+    }
+  });
+
+  (data.links || []).forEach(link=>{
+    const fromKey = ensureNode(link.from.type, link.from.id);
+    const toKey = ensureNode(link.to.type, link.to.id);
+    if(fromKey && toKey) edges.push({ from: fromKey, to: toKey, kind:'manual', label: link.label || null, linkId: link.id });
+  });
+
+  return { nodes: [...nodes.values()], edges };
+}
+
+function connectionsForNode(key, edges){
+  return edges.filter(e => e.from === key || e.to === key).map(e => ({
+    ...e, otherKey: e.from === key ? e.to : e.from
+  }));
+}
+
+// Layout de força simples e estático: roda um número fixo de iterações uma vez só
+// (repulsão entre nós + mola nas arestas + centralização leve) e desenha a posição
+// final — sem simulação contínua, sem recalcular depois.
+function layoutGraph(nodes, edges, width, height){
+  const n = nodes.length;
+  if(n === 0) return;
+  const idx = new Map(nodes.map((node,i)=>[node.key,i]));
+  const pos = nodes.map((node,i)=>({
+    x: width/2 + Math.cos(i/n*2*Math.PI) * Math.min(width,height)*0.32,
+    y: height/2 + Math.sin(i/n*2*Math.PI) * Math.min(width,height)*0.32,
+    vx: 0, vy: 0
+  }));
+  const edgeIdx = edges
+    .map(e=>({ a: idx.get(e.from), b: idx.get(e.to) }))
+    .filter(e => e.a !== undefined && e.b !== undefined);
+
+  const REPEL = 2600, SPRING_LEN = 110, SPRING_K = 0.02, CENTER_K = 0.01, DAMPING = 0.85;
+
+  for(let iter=0; iter<250; iter++){
+    for(let i=0;i<n;i++){
+      for(let j=i+1;j<n;j++){
+        const dx = pos[i].x - pos[j].x, dy = pos[i].y - pos[j].y;
+        const distSq = dx*dx + dy*dy || 0.01;
+        const dist = Math.sqrt(distSq);
+        const force = REPEL / distSq;
+        const fx = (dx/dist) * force, fy = (dy/dist) * force;
+        pos[i].vx += fx; pos[i].vy += fy;
+        pos[j].vx -= fx; pos[j].vy -= fy;
+      }
+    }
+    edgeIdx.forEach(({a,b})=>{
+      const dx = pos[b].x - pos[a].x, dy = pos[b].y - pos[a].y;
+      const dist = Math.sqrt(dx*dx+dy*dy) || 0.01;
+      const diff = dist - SPRING_LEN;
+      const fx = (dx/dist) * diff * SPRING_K, fy = (dy/dist) * diff * SPRING_K;
+      pos[a].vx += fx; pos[a].vy += fy;
+      pos[b].vx -= fx; pos[b].vy -= fy;
+    });
+    for(let i=0;i<n;i++){
+      pos[i].vx += (width/2 - pos[i].x) * CENTER_K;
+      pos[i].vy += (height/2 - pos[i].y) * CENTER_K;
+      pos[i].vx *= DAMPING; pos[i].vy *= DAMPING;
+      pos[i].x += pos[i].vx; pos[i].y += pos[i].vy;
+    }
+  }
+
+  const margin = 36;
+  pos.forEach(p=>{
+    p.x = Math.max(margin, Math.min(width-margin, p.x));
+    p.y = Math.max(margin, Math.min(height-margin, p.y));
+  });
+  nodes.forEach((node,i)=>{ node.x = pos[i].x; node.y = pos[i].y; });
+}
+
+function truncateLabel(text, max){
+  return text.length > max ? text.slice(0, max-1)+'…' : text;
+}
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function renderConnectionsGraph(){
+  const { nodes, edges } = computeGraph();
+  const svg = document.getElementById('connections-svg');
+  const emptyEl = document.getElementById('connections-empty');
+  svg.innerHTML = '';
+
+  if(nodes.length === 0){
+    emptyEl.style.display = 'flex';
+    svg.style.display = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  svg.style.display = 'block';
+
+  const width = svg.clientWidth || 800;
+  const height = svg.clientHeight || 500;
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+  layoutGraph(nodes, edges, width, height);
+  const nodeByKey = new Map(nodes.map(n=>[n.key, n]));
+
+  const edgesGroup = document.createElementNS(SVG_NS, 'g');
+  edges.forEach(e=>{
+    const a = nodeByKey.get(e.from), b = nodeByKey.get(e.to);
+    if(!a || !b) return;
+    const line = document.createElementNS(SVG_NS, 'line');
+    line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+    line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+    line.setAttribute('class', 'conn-edge');
+    edgesGroup.appendChild(line);
+  });
+  svg.appendChild(edgesGroup);
+
+  const nodesGroup = document.createElementNS(SVG_NS, 'g');
+  nodes.forEach(node=>{
+    const g = document.createElementNS(SVG_NS, 'g');
+    g.setAttribute('class', 'conn-node');
+    g.setAttribute('transform', `translate(${node.x},${node.y})`);
+    const circle = document.createElementNS(SVG_NS, 'circle');
+    circle.setAttribute('r', 16);
+    circle.setAttribute('class', `conn-circle ${node.type==='meta' ? 'conn-meta' : 'conn-p-'+node.priority}`);
+    g.appendChild(circle);
+    const label = document.createElementNS(SVG_NS, 'text');
+    label.setAttribute('class', 'conn-label');
+    label.setAttribute('y', 30);
+    label.textContent = truncateLabel(node.text, 16);
+    g.appendChild(label);
+    g.addEventListener('click', ()=>{
+      selectedConnKey = node.key;
+      renderConnectionsPanel();
+    });
+    nodesGroup.appendChild(g);
+  });
+  svg.appendChild(nodesGroup);
+}
+
+function renderConnectionsPanel(){
+  const panel = document.getElementById('connections-panel');
+  if(!selectedConnKey){ panel.classList.remove('open'); return; }
+  const node = nodeFromKey(selectedConnKey);
+  if(!node){ selectedConnKey = null; panel.classList.remove('open'); return; }
+  panel.classList.add('open');
+
+  const { edges } = computeGraph();
+  const conns = connectionsForNode(selectedConnKey, edges);
+  const content = document.getElementById('connections-panel-content');
+  content.innerHTML = `
+    <h3 class="conn-panel-title">${escapeHtml(node.text)}</h3>
+    <div class="conn-panel-type">${node.type === 'meta' ? 'Meta' : 'Tarefa'}${node.type==='tarefa' && node.priority ? ' · '+node.priority : ''}</div>
+    <div class="conn-panel-links">
+      ${conns.length ? conns.map(c=>{
+        const other = nodeFromKey(c.otherKey);
+        const otherLabel = other ? escapeHtml(other.text) : 'item removido';
+        return `
+          <div class="conn-link-row">
+            <span class="conn-link-label">${otherLabel}${c.label ? ` <em>(${escapeHtml(c.label)})</em>` : ''}</span>
+            ${c.kind === 'manual' ? `<button class="conn-link-remove" data-link-id="${c.linkId}">×</button>` : '<span class="conn-link-auto">auto</span>'}
+          </div>
+        `;
+      }).join('') : '<div class="empty-goal">Sem conexões ainda.</div>'}
+    </div>
+    <button type="button" id="conn-add-btn" class="conn-add-btn">+ Conectar</button>
+    <div id="conn-add-form" class="conn-add-form" style="display:none;">
+      <input type="text" id="conn-search" placeholder="Buscar meta ou tarefa..." autocomplete="off">
+      <div id="conn-search-results" class="conn-search-results"></div>
+      <input type="text" id="conn-label-input" placeholder="Rótulo (opcional): ex. depende de">
+      <div class="conn-add-actions">
+        <button type="button" id="conn-add-cancel">Cancelar</button>
+      </div>
+    </div>
+  `;
+
+  content.querySelectorAll('.conn-link-remove').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      data.links = data.links.filter(l=>l.id!==btn.dataset.linkId);
+      save();
+      renderConnectionsGraph();
+      renderConnectionsPanel();
+    });
+  });
+
+  document.getElementById('conn-add-btn').addEventListener('click', ()=>{
+    document.getElementById('conn-add-form').style.display = 'block';
+    document.getElementById('conn-search').focus();
+  });
+  document.getElementById('conn-add-cancel').addEventListener('click', ()=>{
+    document.getElementById('conn-add-form').style.display = 'none';
+  });
+  document.getElementById('conn-search').addEventListener('input', e=>{
+    const q = e.target.value.trim().toLowerCase();
+    const results = document.getElementById('conn-search-results');
+    results.innerHTML = '';
+    if(!q) return;
+    allLinkableItems()
+      .filter(it => it.key !== selectedConnKey && it.text.toLowerCase().includes(q))
+      .slice(0, 8)
+      .forEach(it=>{
+        const row = document.createElement('div');
+        row.className = 'conn-search-row';
+        row.textContent = `${it.type==='meta' ? 'Meta: ' : 'Tarefa: '}${it.text}`;
+        row.addEventListener('click', ()=>{
+          const label = document.getElementById('conn-label-input').value.trim();
+          createManualLink(selectedConnKey, it.key, label);
+          renderConnectionsGraph();
+          renderConnectionsPanel();
+        });
+        results.appendChild(row);
+      });
+  });
+}
+
+function createManualLink(fromKey, toKey, label){
+  const [fromType, fromId] = splitKey(fromKey);
+  const [toType, toId] = splitKey(toKey);
+  const exists = (data.links || []).some(l =>
+    (l.from.type===fromType && l.from.id===fromId && l.to.type===toType && l.to.id===toId) ||
+    (l.from.type===toType && l.from.id===toId && l.to.type===fromType && l.to.id===fromId)
+  );
+  if(exists) return;
+  data.links = data.links || [];
+  data.links.push({ id: uid(), from:{type:fromType,id:fromId}, to:{type:toType,id:toId}, label: label || null });
+  save();
+}
+
+document.getElementById('connections-open-btn').addEventListener('click', ()=>{
+  document.getElementById('connections-screen').classList.add('open');
+  selectedConnKey = null;
+  renderConnectionsGraph();
+  renderConnectionsPanel();
+});
+document.getElementById('connections-back').addEventListener('click', ()=>{
+  document.getElementById('connections-screen').classList.remove('open');
+});
+document.getElementById('connections-panel-close').addEventListener('click', ()=>{
+  selectedConnKey = null;
+  renderConnectionsPanel();
 });
 
 // ---- Tabs ----
